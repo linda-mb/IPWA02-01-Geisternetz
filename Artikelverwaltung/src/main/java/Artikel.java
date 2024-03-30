@@ -13,26 +13,22 @@ public class Artikel implements Serializable
 
     private Date verfuegbarAb;
 
-    private String kuerzel;
-
-    private Double[] dimensionen = new Double[] {100.0, 100.0, 100.0};
-
     public Artikel()
     {
     }
 
-    public Artikel(int nr, String name, String text, String bild)
+    public Artikel(String name, String text, String bild)
     {
-        this(nr, name, text, bild, new Date(0));
+        this(name, text, bild, new Date(0));
     }
 
-    public Artikel(int nr, String name, String text, String bild, Date verfuegbarAb)
+    public Artikel(String name, String text, String bild, Date verfuegbarAb)
     {
-        this.nr = nr;
         this.name = name;
         this.text = text;
         this.bild = bild;
         this.verfuegbarAb = verfuegbarAb;
+
     }
 
     public String getName()
@@ -48,6 +44,11 @@ public class Artikel implements Serializable
     public int getNr()
     {
         return nr;
+    }
+
+    public void setNr(int nr)
+    {
+        this.nr = nr;
     }
 
     public String getText()
@@ -80,23 +81,5 @@ public class Artikel implements Serializable
         this.verfuegbarAb = verfuegbarAb;
     }
 
-    public String getKuerzel()
-    {
-        return kuerzel;
-    }
 
-    public void setKuerzel(String kuerzel)
-    {
-        this.kuerzel = kuerzel;
-    }
-
-    public Double[] getDimensionen()
-    {
-        return dimensionen;
-    }
-
-    public void setDimensionen(Double[] dimensionen)
-    {
-        this.dimensionen = dimensionen;
-    }
 }

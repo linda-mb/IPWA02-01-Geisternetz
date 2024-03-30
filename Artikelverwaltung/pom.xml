@@ -65,11 +65,12 @@
     </dependency>
 
 
+    <!-- note: not for remote connections! -->
     <dependency>
       <groupId>org.languagetool</groupId>
       <artifactId>language-de</artifactId>
       <version>6.3</version>
     </dependency>
-    
+
   </dependencies>
 </project>

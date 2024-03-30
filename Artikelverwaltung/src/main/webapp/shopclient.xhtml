@@ -21,12 +21,11 @@
     <h:form>
         <h:panelGrid columns="2" >
             <h:commandLink value="zurück" action="#{artikelController.zurueck()}"
-                           rendered="#{artikelController.index > 0}"/>
-            <h:outputText rendered="#{artikelController.index == 0}" value=" "/>
-
-            <h:commandLink value="vor" action="#{artikelController.vor()}" rendered="#{artikelController.index &lt; artikelController.maxIndex}"/>
-            <h:outputText rendered="#{artikelController.index == artikelController.maxIndex}" value=" "/>
-
+                           rendered="#{artikelController.index gt 0}"/>
+            <h:outputText value="" rendered="#{artikelController.index == 0}"/>
+            <h:outputText rendered="#{artikelController.index+1 == artikelController.maxIndex}" value=" "/>
+            <h:commandLink value="vor" action="#{artikelController.vor()}"
+                           rendered="#{artikelController.index+1 lt artikelController.maxIndex}"/>
 
             <h:outputLabel value="Nr:" for="nr"/>
             <h:outputText id="nr" value="#{artikelController.artikel.nr}"/>
