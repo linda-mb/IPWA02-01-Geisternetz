@@ -1,10 +1,10 @@
 import java.io.Serializable;
+import java.util.List;
 
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.persistence.EntityTransaction;
-import jakarta.transaction.Transaction;
 
 @Named
 @ViewScoped
@@ -13,7 +13,7 @@ public class ArtikelController implements Serializable
     private int index = 0;
 
     @Inject
-    Shop shop;
+    ArtikelDAO artikelDAO;
 
     @Inject
     CurrentUser currentUser;
@@ -22,17 +22,16 @@ public class ArtikelController implements Serializable
 
     public Artikel getArtikel()
     {
-        return artikel = shop.getSortiment().get(index);
+        return artikel = artikelDAO.getArtikelAtIndex(index);
     }
 
     public void vor()
     {
         System.err.println("Saving Artikel " + artikel.getName());
-        EntityTransaction t = shop.entityManager.getTransaction();
-        t.begin();
-        shop.entityManager.merge(artikel);
+        EntityTransaction t = artikelDAO.getAndBeginTransaction();
+        artikelDAO.merge(artikel);
         t.commit();
-      if (index < shop.getSortiment().size() - 1) {
+      if (index < artikelDAO.getArtikelCount() - 1) {
         index++;
       }
     }
@@ -40,15 +39,17 @@ public class ArtikelController implements Serializable
     public void zurueck()
     {
         System.err.println("Saving Artikel " + artikel.getName());
-        shop.entityManager.merge(artikel);
+        EntityTransaction t = artikelDAO.getAndBeginTransaction();
+        artikelDAO.merge(artikel);
+        t.commit();
       if (index > 0) {
         index--;
       }
     }
 
     public void removeArtikel() {
-        if(!shop.getSortiment().isEmpty())
-            shop.getSortiment().remove(index);
+        if(artikelDAO.getArtikelCount()>0)
+            artikelDAO.removeArtikel(artikel);
     }
 
     public int getIndex()
@@ -56,9 +57,12 @@ public class ArtikelController implements Serializable
         return index;
     }
 
-    public int getMaxIndex() {
-    	return shop.getSortiment().size()-1;
+    public  int getMaxIndex() {
+    	return (int) artikelDAO.getArtikelCount()-1;
     }
 
 
+    public List<String> getAlleBilder() {
+        return artikelDAO.getAlleBilder();
+    }
 }

@@ -48,7 +48,7 @@
 
       <h:outputLabel value="Bild-Datei: " for="bilddatei"/>
       <p:selectOneMenu value="#{artikelController.artikel.bild}" id="bilddatei">
-        <f:selectItems value="#{shop.sortiment}" var="artikel" itemLabel="#{artikel.bild}" itemValue="#{artikel.bild}"/>
+        <f:selectItems value="#{artikelController.alleBilder}" var="bild" itemLabel="#{bild}" itemValue="#{bild}"/>
         <p:ajax event="change" update="bild"/>
       </p:selectOneMenu>
       <h:outputText value=""/>
@@ -72,6 +72,11 @@
     </h:panelGrid>
     <h:commandButton action="#{artikelController.removeArtikel}" value="Löschen"/>
     <h:commandLink action="#{loginController.logout}" value="Logout"/>
+
+    <h:dataTable value="#{artikelController.artikel.bewertungen}" var="bewertung">
+      <h:column><f:facet name="value">Wert</f:facet><h:outputText value="#{bewertung.wert}"/></h:column>
+      <h:column><f:facet name="text">Text</f:facet> <h:outputText value="#{bewertung.text}"/></h:column>
+    </h:dataTable>
   </h:form>
   <p id="fussnote">Bitte beachten Sie: <br/> Diese Seite ist nur ein Entwurf!</p>
 </h:body>

@@ -4,14 +4,16 @@ import java.security.MessageDigest;
 import java.util.*;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import jakarta.inject.Named;
-import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
-import jakarta.persistence.Persistence;
 
 @Named
 @ApplicationScoped
 public class Shop implements Serializable {
+
+    @Inject
+    ArtikelDAO artikelDAO;
 
     private final String[][] users =
             new String[][]{
@@ -24,7 +26,7 @@ public class Shop implements Serializable {
                             "dNw2o1ZcCW+Ge/n/yfYpMLbUZ9fbxqLXEuxTa6ilzXLgmr1imFH27T6q9ZNzlqBeAdKIHDf5SopFt0ttbDybEg==",
                             "client"}
             };
-    private final List<Artikel> sortiment = Arrays.asList(new Artikel[]{
+    static final List<Artikel> baseSortiment = Arrays.asList(new Artikel[]{
             new Artikel("Pantoffeln \"Rudolph\"",
                     "Wunderschöne Filzpantoffeln, in beige Farbe mit einem braunen und schwarzen Kringel. Sehr angenehm für kalte Wintertage.",
                     "filzschuhe.jpg", (new GregorianCalendar(2012, 11, 23).getTime())),
@@ -37,30 +39,13 @@ public class Shop implements Serializable {
             new Film("Laurence d'Arabie", "Wahnsinnige langes und spannendes Film. Ich verspreche es Ihnen. Aber wirklich.", "laurence.png", "laurence-trailer.mp4")
     });
 
-    EntityManager entityManager;
 
     public Shop() {
-        entityManager = Persistence.createEntityManagerFactory("onlineshop").createEntityManager();
-        long count = 0;
 
-
-        count = entityManager.createQuery("SELECT a FROM Artikel a").getResultList().size();
-        System.err.println("Wir haben " + count+ " Artikeln.");
-
-        if(count == 0) {
-            System.err.println("Initialisierung der Daten.");
-            EntityTransaction t = entityManager.getTransaction();
-            t.begin();
-            for(Artikel art : sortiment) {
-                entityManager.persist(art);
-            }
-            t.commit();
-        }
     }
 
-    public List<Artikel> getSortiment() {
-        return (List<Artikel>) entityManager.createQuery("SELECT a FROM Artikel a").getResultList();
-    }
+
+
 
 
     static String hashPassword(String name, String pass, String salt) {

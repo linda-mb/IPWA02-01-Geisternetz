@@ -1,9 +1,10 @@
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import org.hibernate.annotations.Fetch;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+import java.util.ArrayList;
 
 @Entity
 public class Artikel implements Serializable
@@ -19,6 +20,9 @@ public class Artikel implements Serializable
     private String bild;
 
     private Date verfuegbarAb;
+
+    @OneToMany(fetch= FetchType.EAGER)
+    private List<Bewertung> bewertungen = new ArrayList<>();
 
     public Artikel()
     {
@@ -86,6 +90,14 @@ public class Artikel implements Serializable
     public void setVerfuegbarAb(Date verfuegbarAb)
     {
         this.verfuegbarAb = verfuegbarAb;
+    }
+
+    public List<Bewertung> getBewertungen() {
+        return bewertungen;
+    }
+
+    public void addBewertung(Bewertung bewertung) {
+        bewertungen.add(bewertung);
     }
 
 
