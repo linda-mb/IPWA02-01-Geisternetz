@@ -33,7 +33,8 @@ public class Shop implements Serializable {
                     "handtasche.jpg", (new GregorianCalendar(2010, 10, 3).getTime())),
             new Artikel("Filz-Hase \"Moe\"",
                     "Ein putziger Hase aus Filz zur Dekoration. Er lässt sich gern am Rand seines Büros stellen, um Mut zu geben.", "hase.jpg",
-                    (new GregorianCalendar(2013, 11, 31).getTime()))
+                    (new GregorianCalendar(2013, 11, 31).getTime())),
+            new Film("Laurence d'Arabie", "Wahnsinnige langes und spannendes Film. Ich verspreche es Ihnen. Aber wirklich.", "laurence.png", "laurence-trailer.mp4")
     });
 
     EntityManager entityManager;
